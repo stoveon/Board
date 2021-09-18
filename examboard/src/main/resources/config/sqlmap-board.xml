@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardDao">
+	<!-- 게시글수 -->
+	<select id="count" resultType="Integer">
+		select count(*) from "BOARDT"
+	</select>
+	
+	<!-- 전체글목록(페이지별로) -->
+	<select id="articles" parameterType="HashMap" resultType="boardDto" >
+	select * from (select rownum RNUM, "NUM", "WRITER", "TITLE", "CONTENT", "READCOUNT", "REF", "STEP", "DEPTH", "REGDATE" , "PASS" 
+	from (select * from "BOARDT" order by BOARDT."REF" desc, BOARDT."STEP", BOARDT."REGDATE" desc)) where RNUM <![CDATA[>=]]> #{startNum} and RNUM <![CDATA[<=]]> #{endNum}	
+	</select>
+	
+	<!-- 조회수 추가 -->
+	<update id="counterPlus" parameterType="Integer">
+		update "BOARDT" set "READCOUNT" = "READCOUNT" + 1 where "NUM" = #{num}
+	</update>
+	
+	<!-- 해당 게시글 가져오기 -->
+	<select id="detail" parameterType="Integer" resultType="boardDto">
+		select rownum RNUM, "NUM", "WRITER", "TITLE", "CONTENT", "READCOUNT", 
+		"REF", "STEP", "DEPTH", "REGDATE", "PASS" from "BOARDT" where "NUM" = #{num}
+	</select>
+	
+	<!-- 이전 게시글 max("num")처럼 집계 함수 안에 "" 사용하면 안됨! -->
+	<select id="agoNum" parameterType="Integer" resultType="Integer">
+		select max(NUM) from "BOARDT" where "NUM" <![CDATA[<]]> #{num}
+	</select>
+	
+	<!-- 다음 게시글 -->  
+	<select id="nextNum" parameterType="Integer" resultType="Integer">
+		select min(NUM) from BOARDT where NUM <![CDATA[>]]> #{num}
+	</select>
+	
+	<select id="max">
+		select max("NUM") MNUM from BOARDT
+	</select>
+	
+	<!-- 게시글 추가 -->
+	<insert id="insert" parameterType="boardDto">
+		insert into BOARDT(NUM, WRITER, TITLE, CONTENT, READCOUNT, REF, STEP, DEPTH, REGDATE, PASS) 
+		values(BOARDT_SEQ.nextval, #{writer}, #{title}, #{content}, #{readcount}, #{ref}, #{step}, #{depth}, sysdate, #{pass})
+	</insert>
+	
+	<!-- 답글용 -->
+	<update id="reply" parameterType="HashMap" >
+		update BOARDT set STEP = STEP +1 where REF = #{ref} AND STEP &gt; #{step}
+	</update>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="boardDto">
+		update "BOARDT" set "TITLE" = #{title}, "CONTENT" = #{content}, "REGDATE" = sysdate where "NUM" = #{num}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="Integer">
+		delete "BOARDT" where "NUM" = #{num}
+	</delete>
+
+</mapper>
