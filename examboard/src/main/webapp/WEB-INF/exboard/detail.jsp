@@ -35,19 +35,18 @@
 	</tr>
 </table>
 <div style="margin: 10px;">
-	<form method="post" action="<c:url value="/board/write" />">
+	<form method="post" action="<c:url value="/board/write/${boardDto.num}"/>">
 		<input type="hidden" name="num" value="${boardDto.num}"/>
 		<input type="hidden" name="ref" value="${boardDto.ref}"/>
 		<input type="hidden" name="step" value="${boardDto.step}"/>
 		<input type="hidden" name="depth" value="${boardDto.depth}"/>
 		<input type="submit" value="답글">
-		
-		<input type="button" onclick="location.href='<c:url value="/board/update/${boardDto.num}'" />" value="수정"/>
+	</form>		
+		<input type="button" onclick="location.href='<c:url value="/board/update/${boardDto.num}'"/>" value="수정"/>
 
-		<input type="button" onclick="location.href='<c:url value="/board/delete/${boardDto.num}'" />" value="삭제"/>
+		<input type="button" onclick="location.href='<c:url value="/board/delete/${boardDto.num}'"/>" value="삭제"/>
 
-		<input type="button" onclick="location.href='<c:url value="/board/list" />'" value="목록"/>
-	</form>
+		<input type="button" onclick="location.href='<c:url value="/board/list"/>'" value="목록"/>
 </div>
 </section>
 </article>

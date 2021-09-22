@@ -57,10 +57,10 @@ public class BoardDaoImple implements BoardDao{
 	}
 
 	@Override
-	public void artticleInsertRef(BoardDto article) {
+	public void articleInsertRef(int ref, int step) {
 		Map<String, Integer> tmp = new HashMap<String, Integer>();
-		tmp.put("ref", article.getRef());
-		tmp.put("step", article.getStep());
+		tmp.put("ref", ref);
+		tmp.put("step", step);
 		sqlSessionTemplate.update("reply", tmp);
 	}
 	
@@ -78,4 +78,10 @@ public class BoardDaoImple implements BoardDao{
 	public void articeCounterPlus(int num) {
 		sqlSessionTemplate.update("counterPlus", num);
 	}
+
+	@Override
+	public int maxRef() {
+		return sqlSessionTemplate.selectOne("maxRef");
+	}
+		
 }

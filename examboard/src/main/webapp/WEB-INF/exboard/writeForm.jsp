@@ -19,12 +19,13 @@
 <table border="1" style="margin: auto;">
 	<tr>
 		<td><form:label path="title">제목</form:label></td>
-		<c:if test="${boardDto.num != 0}">
+		<c:set var="checkRe" value="${empty checkRe? false : checkRe}"/>
+		<c:if test="${checkRe == true}">
 			<td colspan="3" style="text-align: left; text-indent: 10px;">
 			<form:input path="title" value="[답글] " size="25"/><br>
 			<form:errors path="title"/></td>
 		</c:if>
-		<c:if test="${boardDto.num == 0}">
+		<c:if test="${checkRe == false}">
 			<td colspan="3" style="text-align: left; text-indent: 10px;">
 			<form:input path="title" size="25"/><br>
 			<form:errors path="title"/></td>

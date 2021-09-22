@@ -86,23 +86,34 @@ public class BoardController {
 	@RequestMapping(value="write", method=RequestMethod.GET)
 	public String write(Model model) {
 		BoardDto tmp = new BoardDto();
+		boolean checkRe = false;
 		tmp.setNum(0);
 		tmp.setRef(1);
-		tmp.setStep(0);
+		tmp.setStep(1);
 		tmp.setDepth(0);
+		model.addAttribute("checkRe", checkRe);
+		model.addAttribute("boardDto", tmp);
+		return "/exboard/writeForm";
+	}
+	
+	@RequestMapping(value="write/{num}")
+	public String write(Model model, BoardDto boardDto) {
+		BoardDto tmp = new BoardDto();
+		boolean checkRe = true;
+		model.addAttribute("checkRe", checkRe);
 		model.addAttribute("boardDto", tmp);
 		return "/exboard/writeForm";
 	}
 	
 	@RequestMapping(value="write", method=RequestMethod.POST)
-	public String write(@Valid BoardDto boardDto, BindingResult bindingResult) {
-		if(boardDto.getNum() != 0) {
-			writeService.reple(boardDto.getNum());
-		}
+	public String write(@Valid BoardDto boardDto, BindingResult bindingResult, boolean checkRe) {
 		if(bindingResult.hasErrors()) {
 			return "/exboard/writeForm";
 		}
 		writeService.write(boardDto);
+		if(checkRe == true) {
+			writeService.reply(boardDto);
+		}
 		return "redirect:/board/list";
 	}
 	

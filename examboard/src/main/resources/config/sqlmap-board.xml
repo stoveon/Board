@@ -35,7 +35,7 @@
 		select min(NUM) from BOARDT where NUM <![CDATA[>]]> #{num}
 	</select>
 	
-	<select id="max">
+	<select id="maxRef">
 		select max("NUM") MNUM from BOARDT
 	</select>
 	

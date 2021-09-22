@@ -11,8 +11,9 @@ public interface BoardDao {
 	public BoardDto getNextArticle(int num);
 	public BoardDto getAgoArticle(int num);
 	public void articleInsert(BoardDto article);
-	public void artticleInsertRef(BoardDto article);
+	public void articleInsertRef(int ref, int step);
 	public void articleUpdate(BoardDto article);
 	public void articleDelete(int num);
 	public void articeCounterPlus(int num);
+	public int maxRef();
 }

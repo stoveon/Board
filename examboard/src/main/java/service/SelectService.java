@@ -22,7 +22,8 @@ public class SelectService {
 		int startNum = (pageNum -1) * pageBlock + 1;
 		int endNum = startNum + pageBlock-1;
 		int startPaging = 1;
-		int endPaging = (totalCount / 5) + 1;
+		int endPaging = (int)Math.ceil((double)totalCount / 5);
+//		int endPaging = (totalCount / 5) + 1;		
 		
 		List<BoardDto> articleList = null;
 		if(totalCount > 0) {
