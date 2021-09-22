@@ -35,8 +35,8 @@
 		select min(NUM) from BOARDT where NUM <![CDATA[>]]> #{num}
 	</select>
 	
-	<select id="maxRef">
-		select max("NUM") MNUM from BOARDT
+	<select id="maxRef" resultType="Integer">
+		select max(NUM) MNUM from BOARDT
 	</select>
 	
 	<!-- 게시글 추가 -->

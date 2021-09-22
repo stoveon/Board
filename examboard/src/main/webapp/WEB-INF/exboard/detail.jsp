@@ -35,7 +35,7 @@
 	</tr>
 </table>
 <div style="margin: 10px;">
-	<form method="post" action="<c:url value="/board/write/${boardDto.num}"/>">
+	<form method="get" action="<c:url value="/board/write/${boardDto.num}"/>">
 		<input type="hidden" name="num" value="${boardDto.num}"/>
 		<input type="hidden" name="ref" value="${boardDto.ref}"/>
 		<input type="hidden" name="step" value="${boardDto.step}"/>

@@ -96,8 +96,17 @@ public class BoardController {
 		return "/exboard/writeForm";
 	}
 	
-	@RequestMapping(value="write/{num}")
-	public String write(Model model, BoardDto boardDto) {
+	@RequestMapping(value="write", method=RequestMethod.POST)
+	public String write(@Valid BoardDto boardDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "/exboard/writeForm";
+		}
+		writeService.write(boardDto);
+		return "redirect:/board/list";
+	}	
+	
+	@RequestMapping(value="write/{num}", method= RequestMethod.GET)
+	public String writeRe(Model model, BoardDto boardDto) {
 		BoardDto tmp = new BoardDto();
 		boolean checkRe = true;
 		model.addAttribute("checkRe", checkRe);
@@ -105,15 +114,13 @@ public class BoardController {
 		return "/exboard/writeForm";
 	}
 	
-	@RequestMapping(value="write", method=RequestMethod.POST)
-	public String write(@Valid BoardDto boardDto, BindingResult bindingResult, boolean checkRe) {
+	@RequestMapping(value="write/{num}", method= RequestMethod.POST)
+	public String writeRe(BoardDto boardDto, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "/exboard/writeForm";
 		}
+		writeService.reply(boardDto);
 		writeService.write(boardDto);
-		if(checkRe == true) {
-			writeService.reply(boardDto);
-		}
 		return "redirect:/board/list";
 	}
 	

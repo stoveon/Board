@@ -21,8 +21,8 @@ public class WriteService {
 			boardDto.setRef(tmp.getRef());
 			boardDto.setStep(tmp.getStep()+1);
 			boardDto.setDepth(tmp.getDepth()+1);
-			System.out.println("write step: " + tmp.getStep());
-			System.out.println("write depth: " + tmp.getDepth());
+//			System.out.println("write step: " + tmp.getStep());
+//			System.out.println("write depth: " + tmp.getDepth());
 		}else {
 			boardDto.setRef(boardDao.maxRef() + 1);
 			boardDto.setStep(1);
@@ -36,8 +36,8 @@ public class WriteService {
 		BoardDto tmp = boardDao.getArticle(boardDto.getNum());
 		int ref = tmp.getRef();
 		int step = tmp.getStep();
-		System.out.println("reply ref: " + ref);
-		System.out.println("reply step: " + step);
+//		System.out.println("reply ref: " + ref);
+//		System.out.println("reply step: " + step);
 		boardDao.articleInsertRef(ref, step);
 	}
 
